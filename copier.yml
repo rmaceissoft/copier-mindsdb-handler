@@ -1,0 +1,13 @@
+# configuration
+_subdirectory: "template"
+
+# questions
+handler_name:
+    type: str
+    help: What is your handler name?
+
+#handler_type:
+#    type: str
+#    help: What handler type do you want to implement?
+#    choices:
+#        - Application Handler

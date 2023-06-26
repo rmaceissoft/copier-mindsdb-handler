@@ -1,0 +1,72 @@
+import pandas as pd
+from typing import Dict
+
+
+from mindsdb.integrations.handlers.{{handler_name}}_handler.{{handler_name}}_tables import {{handler_name.title()}}Table
+from mindsdb.integrations.libs.api_handler import APIHandler
+from mindsdb.integrations.libs.response import (
+    HandlerStatusResponse as StatusResponse,
+    HandlerResponse as Response,
+)
+from mindsdb.utilities import log
+from mindsdb_sql import parse_sql
+
+
+
+class {{handler_name.title()}}Handler(APIHandler):
+    """A class for handling connections and interactions with the {{handler_name.title()}} API.
+
+    """
+
+    def __init__(self, name: str = None, **kwargs):
+        """Registers all tables and prepares the handler for an API connection.
+
+        Args:
+            name: (str): The handler name to use
+        """
+        super().__init__(name)
+
+        args = kwargs.get('connection_data', {})
+
+        self.is_connected = False
+
+        data = {{handler_name.title()}}Table(self)
+        self._register_table('{{handler_name}}', data)
+
+    def connect(self) -> Spot:
+        """ Set up any connections required by the handler
+        Should return output of check_connection() method after attempting
+        connection. Should switch self.is_connected.
+        Returns:
+            HandlerStatusResponse
+        """
+        pass
+
+    def check_connection(self) -> StatusResponse:
+        """ Check connection to the handler
+        Returns:
+            HandlerStatusResponse
+        """
+        pass
+
+    def native_query(self, query: str = None) -> Response:
+        """Receive raw query and act upon it somehow.
+        Args:
+            query (Any): query in native format (str for sql databases,
+                dict for mongo, api's json etc)
+        Returns:
+            HandlerResponse
+        """        
+        ast = parse_sql(query, dialect='mindsdb')
+        return self.query(ast)
+
+    def call_{{handler_name}}_api(self, method_name: str = None, params: Dict = None) -> pd.DataFrame:
+        """Calls the API method with the given params.
+
+        Returns results as a pandas DataFrame.
+
+        Args:
+            method_name (str): Method name to call
+            params (Dict): Params to pass to the API call
+        """
+        raise NotImplementedError('Method name {} not supported by {{handler_name.title()}} API Handler'.format(method_name))

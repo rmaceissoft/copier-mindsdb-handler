@@ -1,0 +1,56 @@
+from typing import List
+
+from mindsdb.integrations.libs.api_handler import APITable
+
+
+class {{handler_name.title()}}Table(APITable):
+
+    def select(self, query: ast.Select) -> pd.DataFrame:
+        """Selects data from the API and returns it as a pandas DataFrame.
+
+        Returns dataframe representing the API results.
+
+        Args:
+            query (ast.Select): SQL SELECT query
+
+        """
+        pass
+
+    def get_columns(self) -> List[str]:
+        """ Gets all columns to be returned in pandas DataFrame responses
+
+        Returns
+            List of columns
+
+        """
+        return []
+
+    def insert(self, query: ast.Insert):
+        """ It implements the mappings from the ast.Insert and calls 
+        the actual API through the call_application_api
+
+        Args:
+            query (ast.Insert): SQL INSERT query
+
+        """
+        pass
+
+    def delete(self, query: ast.Delete):
+        """ It implements the mappings from the ast.Delete and calls 
+        the actual API through the call_application_api
+
+        Args:
+            query (ast.Delete): SQL query to parse.
+        
+        """
+        pass
+
+    def update(self, query: ast.Update) -> None:
+        """ It implements the mappings from the ast.Update and calls 
+        the actual API through the call_application_api
+
+        Args:
+            query (ast.Update): SQL query to parse.
+
+        """
+        pass
