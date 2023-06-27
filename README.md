@@ -39,3 +39,26 @@ Or even shorter:
 ```bash
 copier copy "gh:rmaceissoft/copier-mindsdb-handler" .
 ```
+
+You will be asked some questions. 
+
+```bash
+🎤 What is your handler name?
+```
+
+Answer them and the following directory structure will be scaffolded:
+
+```
+.
+│   ├── mindsdb
+│   │   ├── integrations
+│   │   │   ├── handlers
+│   │   │   │   ├── <handler_name>
+│   │   │   │   │   ├── README.md
+│   │   │   │   │   ├── __about__.py
+│   │   │   │   │   ├── __init__.py
+│   │   │   │   │   ├── icon.svg
+│   │   │   │   │   ├── requirements.txt
+│   │   │   │   │   ├── <handler_name>_handler.py
+│   │   │   │   │   └── <handler_name>_tables.py
+```
