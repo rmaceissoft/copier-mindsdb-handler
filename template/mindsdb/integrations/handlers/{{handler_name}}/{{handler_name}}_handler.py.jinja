@@ -1,5 +1,5 @@
 import pandas as pd
-from typing import Dict
+from typing import Any, Dict
 
 
 from mindsdb.integrations.handlers.{{handler_name}}_handler.{{handler_name}}_tables import {{handler_name.title()}}Table
@@ -18,6 +18,9 @@ class {{handler_name.title()}}Handler(APIHandler):
 
     """
 
+    # TODO: Add the connection argument names supported by handler here
+    AVAILABLE_CONNECTION_ARGUMENTS = []
+
     def __init__(self, name: str = None, **kwargs):
         """Registers all tables and prepares the handler for an API connection.
 
@@ -27,11 +30,31 @@ class {{handler_name.title()}}Handler(APIHandler):
         super().__init__(name)
 
         args = kwargs.get('connection_data', {})
+        self.connection_args = self._read_connection_args(name, **args)
 
         self.is_connected = False
 
         data = {{handler_name.title()}}Table(self)
         self._register_table('{{handler_name}}', data)
+
+    def _read_connection_args(self, name: str = None, **kwargs) -> Dict[str, Any]:
+        """ Read the connection arguments by following the order of precedence below:
+
+            1. PARAMETERS object
+            2. Environment Variables
+            3. MindsDB Config File
+
+        """
+        filtered_args = {}
+        handler_config = Config().get(f'{name.lower()}_handler', {})
+        for k in type(self).AVAILABLE_CONNECTION_ARGUMENTS:
+            if k in kwargs:
+                filtered_args[k] = kwargs[k]
+            elif f'{name.upper()}_{k.upper()}' in os.environ:
+                filtered_args[k] = os.environ[f'{name.upper()}_{k.upper()}']
+            elif k in handler_config:
+                filtered_args[k] = handler_config[k]
+        return filtered_args
 
     def connect(self) -> Spot:
         """ Set up any connections required by the handler
