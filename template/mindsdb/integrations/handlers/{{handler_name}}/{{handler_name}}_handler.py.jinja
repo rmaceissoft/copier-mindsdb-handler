@@ -56,12 +56,12 @@ class {{handler_name.title()}}Handler(APIHandler):
                 filtered_args[k] = handler_config[k]
         return filtered_args
 
-    def connect(self) -> Spot:
-        """ Set up any connections required by the handler
-        Should return output of check_connection() method after attempting
-        connection. Should switch self.is_connected.
+    def connect(self) -> object:
+        """ Set up any connections required by the handler. Should switch self.is_connected.
+
         Returns:
-            HandlerStatusResponse
+            object
+
         """
         pass
 
