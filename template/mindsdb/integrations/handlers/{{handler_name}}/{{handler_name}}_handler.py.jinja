@@ -1,8 +1,8 @@
+{% set handler_table_names = handler_table_name.lower().split(',') %}
 import pandas as pd
 from typing import Any, Dict
 
-
-from mindsdb.integrations.handlers.{{handler_name}}_handler.{{handler_name}}_tables import {{handler_name.title()}}Table
+from mindsdb.integrations.handlers.{{handler_name}}_handler.{{handler_name}}_tables import {% for table_name in handler_table_names %}{{handler_name.title()}}{{table_name.title()}}Table{% if not loop.last %}, {% endif %}{% endfor %}
 from mindsdb.integrations.libs.api_handler import APIHandler
 from mindsdb.integrations.libs.response import (
     HandlerStatusResponse as StatusResponse,
@@ -10,7 +10,6 @@ from mindsdb.integrations.libs.response import (
 )
 from mindsdb.utilities import log
 from mindsdb_sql import parse_sql
-
 
 
 class {{handler_name.title()}}Handler(APIHandler):
@@ -34,8 +33,9 @@ class {{handler_name.title()}}Handler(APIHandler):
 
         self.is_connected = False
 
-        data = {{handler_name.title()}}Table(self)
-        self._register_table('{{handler_name}}', data)
+        {% for table_name in handler_table_names -%}
+        self._register_table('{{table_name}}', {{handler_name.title()}}{{table_name.title()}}Table(self))
+        {% endfor %}
 
     def _read_connection_args(self, name: str = None, **kwargs) -> Dict[str, Any]:
         """ Read the connection arguments by following the order of precedence below:

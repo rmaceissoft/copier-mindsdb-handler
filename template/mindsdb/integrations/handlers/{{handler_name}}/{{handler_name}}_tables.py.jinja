@@ -1,3 +1,4 @@
+{% set handler_table_names = handler_table_name.lower().split(',') %}
 from typing import List
 
 from mindsdb.integrations.libs.api_handler import APITable
@@ -5,8 +6,10 @@ from mindsdb_sql.parser import ast
 import pandas as pd
 
 
-class {{handler_name.title()}}Table(APITable):
+{% for table_name in handler_table_names -%}
+class {{handler_name.title()}}{{table_name.title()}}Table(APITable):
 
+    {% if handler_table_select %}
     def select(self, query: ast.Select) -> pd.DataFrame:
         """Selects data from the API and returns it as a pandas DataFrame.
 
@@ -17,6 +20,7 @@ class {{handler_name.title()}}Table(APITable):
 
         """
         pass
+    {% endif %}
 
     def get_columns(self) -> List[str]:
         """ Gets all columns to be returned in pandas DataFrame responses
@@ -27,6 +31,7 @@ class {{handler_name.title()}}Table(APITable):
         """
         return []
 
+    {% if handler_table_insert %}
     def insert(self, query: ast.Insert):
         """ It implements the mappings from the ast.Insert and calls 
         the actual API through the call_application_api
@@ -36,7 +41,9 @@ class {{handler_name.title()}}Table(APITable):
 
         """
         pass
+    {% endif %}
 
+    {% if handler_table_delete %}
     def delete(self, query: ast.Delete):
         """ It implements the mappings from the ast.Delete and calls 
         the actual API through the call_application_api
@@ -46,7 +53,9 @@ class {{handler_name.title()}}Table(APITable):
         
         """
         pass
+    {% endif %}
 
+    {% if handler_table_update %}
     def update(self, query: ast.Update) -> None:
         """ It implements the mappings from the ast.Update and calls 
         the actual API through the call_application_api
@@ -56,3 +65,5 @@ class {{handler_name.title()}}Table(APITable):
 
         """
         pass
+    {% endif %}
+{% endfor %}

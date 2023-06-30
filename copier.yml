@@ -11,3 +11,27 @@ handler_name:
 #    help: What handler type do you want to implement?
 #    choices:
 #        - Application Handler
+
+handler_table_name:
+    type: str
+    help: What is your handler table name? (if more than one, separate by comma)
+
+handler_table_select:
+    type: bool
+    help: Do you want to generate APITable' select() method?
+    default: True
+
+handler_table_insert:
+    type: bool
+    help: Do you want to generate APITable' insert() method?
+    default: False
+
+handler_table_update:
+    type: bool
+    help: Do you want to generate APITable' update() method?
+    default: False
+
+handler_table_delete:
+    type: bool
+    help: Do you want to generate APITable' delete() method?
+    default: False
