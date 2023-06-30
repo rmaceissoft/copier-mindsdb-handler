@@ -44,6 +44,11 @@ You will be asked some questions.
 
 ```bash
 🎤 What is your handler name?
+🎤 What is your handler table name? (if more than one, separate by comma)
+🎤 Do you want to generate APITable' select() method?
+🎤 Do you want to generate APITable' insert() method?
+🎤 Do you want to generate APITable' update() method?
+🎤 Do you want to generate APITable' delete() method?
 ```
 
 Answer them and the following directory structure will be scaffolded:
