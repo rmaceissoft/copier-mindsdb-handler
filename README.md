@@ -58,7 +58,7 @@ Answer them and the following directory structure will be scaffolded:
 │   ├── mindsdb
 │   │   ├── integrations
 │   │   │   ├── handlers
-│   │   │   │   ├── <handler_name>
+│   │   │   │   ├── <handler_name>_handler
 │   │   │   │   │   ├── README.md
 │   │   │   │   │   ├── __about__.py
 │   │   │   │   │   ├── __init__.py
